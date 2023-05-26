@@ -92,3 +92,6 @@ Caused by: org.eclipse.jgit.errors.NoRemoteRepositoryException: file:///C:\green
 
 !ENTRY org.eclipse.m2e.logback.appender 2 0 2023-05-26 13:17:29.615
 !MESSAGE close() called when useCnt is already zero for [RepositoryHandle:Repository[C:\Users\Administrator\git\jspworks\.git]]
+
+!ENTRY org.eclipse.m2e.logback.appender 2 0 2023-05-26 13:18:32.722
+!MESSAGE close() called when useCnt is already zero for Repository[C:\Users\Administrator\git\jspworks\.git]
