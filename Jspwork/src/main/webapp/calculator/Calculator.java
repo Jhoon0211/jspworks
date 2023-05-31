@@ -5,12 +5,14 @@ import java.io.Serializable;
 public class Calculator implements Serializable{
 
 	private static final long serialVersionUID = 11L;
-	
+
+	// 필드
 	private int num1 = 0;
 	private int num2 = 0;
 	private String op = "";
 	private int result = 0;
 	
+	// 메서드
 	public int calculate() {
 		if(op.equals("+")) {
 			result = num1 + num2;
