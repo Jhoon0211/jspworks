@@ -7,7 +7,8 @@
 <title>request 객체 예제</title>
 </head>
 <body>
-	<form action="process.jsp">
+	<form action="process.jsp" method="post">
+	<!-- 정보가 아니면 get방식으로 써도 됨 -->
 		<label for="uname">이름 </label>
 		<input type="text" id="uname" name="uname">
 		<button type="submit">등록</button>
