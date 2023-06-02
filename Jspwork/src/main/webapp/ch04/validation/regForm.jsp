@@ -12,24 +12,7 @@
 	#regForm{width: 50%; margin: 0 auto; background: lightgreen;
 		padding: 15px 20px; border-radius: 10px;}
 </style>
-<script>
-	function signUp(){
-		//alert("test");
-		let form = document.form1;
-		let name = form.name.value;
-		let email = form.email.value;
-		
-		alert("정말로 가입하시겠습니까?");
-		// 회원 가입 폼 숨기기
-		document.getElementById('regForm').style.display = "none";
-		document.getElementById('rname').innerHTML = name;
-		document.getElementById('rmail').innerHTML = email;
-		// 기업 정보 스타일
-		document.getElementById('result').setAttribute('style',
-				"display:block; background: lightgreen; padding: 5px 20px;")
-				
-	}
-</script>
+<script src="../../resources/js/signUp.js"></script>
 </head>
 <body>
 <div id="container">
@@ -52,6 +35,9 @@
 		<p>이름: <span id="rname"></span></p>
 		<p>이메일: <span id="rmail"></span></p>
 	</div>
+	<script>
+		document.getElementById('result').style.display = "none";
+	</script>
 </div>	
 </body>
 </html>
