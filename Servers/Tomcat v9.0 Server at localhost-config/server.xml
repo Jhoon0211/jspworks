@@ -162,7 +162,7 @@
 
  	  
       
-      <Context docBase="Jspwork" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Jspwork"/></Host>
+      <Context docBase="Members" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Members"/></Host>
     </Engine>
   </Service>
 </Server>

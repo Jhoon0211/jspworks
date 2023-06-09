@@ -162,7 +162,7 @@
 
  	  
       
-      <Context docBase="C:\green_project\jspworks\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Jspwork" path="" reloadable="true" source="org.eclipse.jst.jee.server:Jspwork"/></Host>
+      <Context docBase="C:\green_project\jspworks\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\Members" path="" reloadable="true" source="org.eclipse.jst.jee.server:Members"/></Host>
     </Engine>
   </Service>
 </Server>
