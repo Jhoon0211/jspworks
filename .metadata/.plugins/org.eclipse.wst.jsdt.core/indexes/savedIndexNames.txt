@@ -1,6 +1,4 @@
 INDEX VERSION 1.4+C:\green_project\jspworks\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-2191039897.index
-998783956.index
 998783956.index
 2176728043.index
 3259867299.index
@@ -8,7 +6,7 @@ INDEX VERSION 1.4+C:\green_project\jspworks\.metadata\.plugins\org.eclipse.wst.j
 2122870614.index
 3305400737.index
 3886777575.index
-800215981.index
 3283477832.index
 192411262.index
 2675660932.index
+97818070.index

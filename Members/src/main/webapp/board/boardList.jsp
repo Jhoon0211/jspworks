@@ -12,7 +12,7 @@
 <body>
 	<jsp:include page="../header.jsp" />
 	<div id="container">
-		<section id="memberlist">
+		<section id="boardlist">
 		<h2>게시판 목록</h2>
 		<table id="tbl_list">
 			<thead>
@@ -28,9 +28,15 @@
 				<c:forEach var="board" items="${boardList}">
 				<tr>
 					<td><c:out value="${board.bnum }"/></td>
-					<td><c:out value="${board.title}"/></td>
-					<td><c:out value="${board.regDate }"/></td>
-					<td><c:out value="${board.hit }"/></td>
+					<td>
+						<a href="/boardView.do?bnum=${board.bnum}">
+							<c:out value="${board.title}"/>
+						</a>
+					</td>
+					<td><fmt:formatDate value="${board.regDate}" 
+							pattern="yyyy-MM-dd HH:mm:ss" /></td>
+					<%-- <td><c:out value="${board.regDate }"/></td> --%>
+					<td><c:out value="${board.hit}"/></td>
 					<td><c:out value="${board.memberId }"/></td>
 				</tr>
 				</c:forEach>
