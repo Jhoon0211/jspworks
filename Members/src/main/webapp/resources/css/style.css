@@ -54,6 +54,8 @@ footer{height: 80px; border-top: 2px solid #222;}
 #memberlist table th, td{padding: 10px 0; font-size: 0.9em;}
 #memberlist table thead{background: #eee;}
 #memberlist table td button{padding: 5px 10px;}
+#memberlist .banner{text-align: center;}
+#memberlist h3{text-align: center; padding: 20px;}
 
 /* detail 스타일 */
 #detail{width: 400px; margin: 30px auto 100px;}
@@ -77,6 +79,14 @@ footer{height: 80px; border-top: 2px solid #222;}
 #login form input[type='text']{width: 200px; height: 30px;}
 #login form input[type='password']{width: 200px; height: 30px;}
 #login form input[type='submit']{padding: 10px 15px; margin-top:10px;}
+
+/* memberEvent 스타일 */
+#memberEvent{width: 80%; margin: 40px auto 100px; text-align: center}
+#memberEvent .banner{margin: 30px auto;}
+#memberEvent button{padding: 10px 20px; font-size: 1em;}
+#memberEvent #display{width: 320px; height: 100px; margin: 20px auto;
+	border: 1px solid #ccc; padding-top: 60px; letter-spacing: 1px;
+	background: #80ffff;}
 
 /* boardList 스타일 */
 #boardlist{width: 650px; margin: 40px auto 200px;}

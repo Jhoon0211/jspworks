@@ -46,9 +46,15 @@
 							</a>
 						</td>
 					</tr>
-					</c:forEach>
+					</c:forEach>					
 				</tbody>
 			</table>
+			<h3>이벤트 추첨 링크</h3>
+			<div class="banner">
+				<a href="/memberEvent.do">
+					<img src="/resources/images/bronx.png">
+				</a>
+			</div>
 		</section>
 	</div>
 </body>
