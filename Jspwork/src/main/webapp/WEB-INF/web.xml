@@ -38,6 +38,7 @@
   	  		<form-error-page>/ch06/login_failed.jsp</form-error-page>
   	  </form-login-config>
   </login-config>
+
 </web-app>
 
 
