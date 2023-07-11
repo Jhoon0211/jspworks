@@ -16,18 +16,14 @@ public class BoardDAO {
 	private ResultSet rs = null;
 	
 	// 게시글 목록
-	public ArrayList<Board> getBoardList(int page){
+	public ArrayList<Board> getBoardList(int startRow, int pageSize){
 		ArrayList<Board> boardList = new ArrayList<>();
-		int pageSize = 10;
-		conn = JDBCUtil.getConnection();
-		String sql = "SELECT * "
-				+ "FROM (SELECT ROWNUM RN, t_board.* "
-				+ "FROM t_board ORDER BY bnum DESC) "
-				+ "WHERE RN >= ? AND RN <= ?";
 		try {
+			conn = JDBCUtil.getConnection();
+			String sql = "select * from t_board order by bnum desc limit ?, ?;";
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, (page-1)*pageSize +1); // 시작행
-			pstmt.setInt(2, page*pageSize);	// 페이지 * 페이지당 총 행수
+			pstmt.setInt(1, startRow-1); // 시작행
+			pstmt.setInt(2, pageSize);	// 페이지 * 페이지당 총 행수
 			rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Board board = new Board();
@@ -52,8 +48,8 @@ public class BoardDAO {
 	// 게시글 쓰기
 	public void addBoard(Board board) {
 		conn = JDBCUtil.getConnection();
-		String sql = "INSERT INTO t_board (bnum, title, content, memberid, fileupload) "
-				+ "VALUES (b_seq.NEXTVAL, ?, ?, ?, ?)";
+		String sql = "INSERT INTO t_board(title, content, memberid, fileupload) "
+				+ "VALUES (?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, board.getTitle());
@@ -144,7 +140,7 @@ public class BoardDAO {
 	// 게시글 총 개수
 		public int getBoardCount() {
 			int total = 0;
-			conn = JDBCUtil.getConndection();
+			conn = JDBCUtil.getConnection();
 			String sql = "SELECT COUNT(*) AS total FROM t_board";
 			try {
 				pstmt = conn.prepareStatement(sql);
@@ -156,6 +152,7 @@ public class BoardDAO {
 			} finally {
 				JDBCUtil.close(conn, pstmt, rs);
 			}
+			return total;
 		
 		}
 }

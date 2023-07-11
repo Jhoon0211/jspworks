@@ -144,10 +144,10 @@ public class MainController extends HttpServlet {
 			// 각 페이지의 첫 행 : 1page -> 1번, 2page -> 11, 3->21
 			int currentPage = Integer.parseInt(pageNum);
 			int pageSize = 10;
-			int startRaw = (currentPage-1)*pageSize + 1;
+			int startRow = (currentPage-1)*pageSize + 1;
 			
 			// 시작 페이지 : 13번 -> 23 -> 3
-			int startPage = startRaw / pageSize + 1;
+			int startPage = startRow / pageSize + 1;
 			
 			// 종료 페이지
 			int total = 23; // 총 행수가 나누어 떨어지지 않으면 페이지 수에 1을 더함
