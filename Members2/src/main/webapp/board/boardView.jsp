@@ -44,11 +44,29 @@
                                		<button type="button">삭제</button>
                                	</a>
                                </c:if>
-                               <a href="/boardList.do"><button type="button">목록</button></a>
+                               <a href="/boardList.do">
+                               		<button type="button">목록</button>
+                               </a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
+			<!-- 댓글 영역 -->
+			<h3>댓글</h3>
+			<c:forEach items="${replyList}" var="reply">
+			<div>
+				<p>${reply.rcontent}</p>
+				<p>작성자 : ${reply.replyer}</p>			
+			</div>
+			</c:forEach>
+			<!-- 댓글 등록 -->
+			<form action="/addReply.do" method="post">
+				<p>
+					<textarea name="rcontent" rows="3" cols="70"
+						placeholder="댓글을 남겨주세요"></textarea>
+				</p>
+				<button type="submit">등록</button>
+			</form>
 		</section>	
 	</div>
 	<jsp:include page="../footer.jsp" />

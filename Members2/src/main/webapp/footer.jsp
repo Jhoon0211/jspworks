@@ -7,4 +7,4 @@
 		<li><a href="">이용 약관</a></li>
 		<li><a href="">사이트 맵</a></li>
 	</ul>
-</footer>z
+</footer>
