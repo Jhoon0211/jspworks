@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="resources/css/style.css">
 <header>
 	<div id="logo">
-		<h1><a href="index.jsp">Gangnam</a></h1>
+		<h1><a href="/index.do">Gangnam</a></h1>
 	</div>
 	<nav>
 		<c:choose>
