@@ -48,7 +48,16 @@
 					</tr>
 					<tr>
 						<td colspan="2">
-							<a href="/memberList.do"><button type="button">목록</button></a>
+							<a href="/memberList.do">
+								<button type="button">목록</button>
+							</a>
+							<a href="/memberUpdateForm.do?memberId=${member.memberId}">
+								<button type="button">회원수정</button>
+							</a>	
+							<a href="/outMember.do?memberId=${member.memberId}"
+								   onclick="return confirm('정말로 탈퇴하시겠습니까?')">
+								<button type="button">회원탈퇴</button>
+							</a>						
 						</td>
 					</tr>
 				</tbody>

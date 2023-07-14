@@ -65,20 +65,19 @@ public class MainController extends HttpServlet {
 		//세션 객체 생성
 		HttpSession session = request.getSession();
 		
-		if(command.equals("/index.do")) {
-			// 게시글 가져오기
+		if(command.equals("/index.do")) { //index 페이지 요청
+			//게시글 가져오기
 			ArrayList<Board> boardList = boardDAO.getBoardList();
-			int size = boardList.size();
-			
-			// 최신 글 3개를 담은 배열 생성
-			Board[] newBoardList = {boardList.get(size-1), boardList.get(size-2),
+			int size = boardList.size(); //게시글의 총수
+			//최신글 3개를 담은 배열 생성
+			Board[] newBoardList = {boardList.get(size-1), boardList.get(size-2), 
 					boardList.get(size-3)};
 			
-			//모델 생성 및 보내기
+			//모델 생성
 			request.setAttribute("boardList", newBoardList);
 			
-			// index 페이지로 포워딩
-			nextPage = "main.jsp";
+			//index 페이지로 포워딩
+			nextPage = "main.jsp";  //main 페이지로 이동
 		}else if(command.equals("/memberList.do")) { //회원 목록 조회
 			ArrayList<Member> memberList = memberDAO.getMemberList();
 			
@@ -142,15 +141,27 @@ public class MainController extends HttpServlet {
 		} else if(command.equals("/logout.do")) {//로그아웃 요청
 			//세션 모두 삭제(해제)
 			session.invalidate();
-			nextPage = "/index.jsp";
+			nextPage = "index.jsp";
 		} else if(command.equals("/deleteMember.do")) { //회원 삭제 요청
 			String memberId = request.getParameter("memberId");
 			memberDAO.deleteMember(memberId); //회원 삭제 처리
 			nextPage = "/memberList.do";
 		} else if(command.equals("/memberEvent.do")) { 
 			nextPage = "/member/memberEvent.jsp";
-		} else if (command.equals("/boardList.do")) {
+		} else if(command.equals("/outMember.do")) {
+			String memberId = request.getParameter("memberId");
+			memberDAO.outMember(memberId); // 회원 탈퇴
+			session.invalidate();
+			nextPage = "/index.do";
+		} else if(command.equals("/memberUpdateForm.do")) {
+			String memberId = request.getParameter("memberId");
+			Member member = memberDAO.getMember(memberId);
 			
+			// 모델 생성
+			request.setAttribute("member", member);
+			
+			// 회원 수정 페이지로 이동
+			nextPage = "member/memberUpdateForm.jsp";
 		}
 		
 		//게시판 관리
@@ -170,7 +181,7 @@ public class MainController extends HttpServlet {
 			
 			//종료(끝) 페이지
 			int total = boardDAO.getBoardCount(); //총행수가 나누어 떨어지면 않으면 페이지수에 1을 더함
-			//int endPage = total / pageSize -> 3page
+			//int endPage = toatal / pageSize -> 3page
 			int endPage = total / pageSize;  //총행수 / 페이지당 행의 수
 			endPage = (total % 10 == 0) ? endPage : endPage + 1;
 			
@@ -264,12 +275,37 @@ public class MainController extends HttpServlet {
 			newReply.setReplyer(replyer);
 			
 			replyDAO.addReply(newReply);  //댓글 등록 처리
+		}else if(command.equals("/deleteReply.do")) { //댓글 삭제
+			int rno = Integer.parseInt(request.getParameter("rno"));
+			replyDAO.deleteReply(rno);  //삭제 처리
+		}else if(command.equals("/replyUpdateForm.do")) { //댓글 수정폼 요청
+			//요청한 댓글 불러오기(상세 보기)
+			int rno = Integer.parseInt(request.getParameter("rno"));
+			Reply reply = replyDAO.getReply(rno);
+			//모델 생성
+			request.setAttribute("reply", reply);
+			//댓글 수정 폼 페이지로 이동
+			nextPage = "board/replyUpdateForm.jsp";
+		}else if(command.equals("/updateReply.do")) {//댓글 수정 처리
+			//폼에 관련한 데이터 받아오기
+			int rno = Integer.parseInt(request.getParameter("rno"));
+			String rcontent = request.getParameter("rcontent");
+			
+			//댓글 객체에 저장
+			Reply reply = new Reply();
+			reply.setRno(rno);
+			reply.setRcontent(rcontent);
+			
+			replyDAO.updateReply(reply);  //댓글 수정 처리
 		}
 		
 		//포워딩 - 새로고침 자동 저장 오류 해결 : response.sendRedirect()
 		if(command.equals("/addBoard.do")) {
 			response.sendRedirect("/boardList.do");
 		}else if(command.equals("/addReply.do")) {
+			int bnum = Integer.parseInt(request.getParameter("bnum"));
+			response.sendRedirect("/boardView.do?bnum=" + bnum);
+		}else if(command.equals("/deleteReply.do") || command.equals("/updateReply.do")) {
 			int bnum = Integer.parseInt(request.getParameter("bnum"));
 			response.sendRedirect("/boardView.do?bnum=" + bnum);
 		}

@@ -49,7 +49,7 @@ public class MemberDAO{
 				member.setPasswd(rs.getString("passwd"));
 				member.setName(rs.getString("name"));
 				member.setGender(rs.getString("gender"));
-				member.setJoinDate(rs.getDate("joindate"));
+				member.setJoinDate(rs.getTimestamp("joindate"));
 				
 				memberList.add(member); // 리스트에 위 항목들을 저장
 			}
@@ -76,7 +76,7 @@ public class MemberDAO{
 				member.setPasswd(rs.getString("passwd"));
 				member.setName(rs.getString("name"));
 				member.setGender(rs.getString("gender"));
-				member.setJoinDate(rs.getDate("joindate"));
+				member.setJoinDate(rs.getTimestamp("joindate"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -166,6 +166,21 @@ public class MemberDAO{
 		}
 		return result;
 	}
+	
+	// 회원 탈퇴
+		public void outMember(String memberId) {
+			conn = JDBCUtil.getConnection();
+			String sql = "DELETE FROM t_member WHERE memberId = ?";
+			try {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, memberId);
+				pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				JDBCUtil.close(conn, pstmt);
+			}
+		}
 	
 	
 }

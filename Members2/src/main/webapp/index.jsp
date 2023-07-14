@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>강남 커뮤니티입니다.</title>
 <link rel="stylesheet" href="resources/css/style.css">
+<script src="https://kit.fontawesome.com/cf70e4dc4a.js" crossorigin="anonymous"></script>
+
 </head>
 <body>
 	<script>
