@@ -145,27 +145,60 @@ public class MainController extends HttpServlet {
 		} else if(command.equals("/deleteMember.do")) { //회원 삭제 요청
 			String memberId = request.getParameter("memberId");
 			memberDAO.deleteMember(memberId); //회원 삭제 처리
-			nextPage = "/memberList.do";
+			//세션 아웃
+			session.invalidate();
+			
+			nextPage = "/index.jsp";
 		} else if(command.equals("/memberEvent.do")) { 
 			nextPage = "/member/memberEvent.jsp";
-		} else if(command.equals("/outMember.do")) {
-			String memberId = request.getParameter("memberId");
-			memberDAO.outMember(memberId); // 회원 탈퇴
-			session.invalidate();
-			nextPage = "/index.do";
-		} else if(command.equals("/memberUpdateForm.do")) {
+		} else if(command.equals("/memberUpdateForm.do")) { //회원 수정 페이지 요청
 			String memberId = request.getParameter("memberId");
 			Member member = memberDAO.getMember(memberId);
+			String language = request.getParameter("language");
 			
-			// 모델 생성
+			//모델 생성
 			request.setAttribute("member", member);
+			request.setAttribute("language", language);
 			
-			// 회원 수정 페이지로 이동
+			//회원 수정 페이지 이동
 			nextPage = "member/memberUpdateForm.jsp";
+		} else if(command.equals("/updateMember.do")) {
+			//회원 수정 폼에 입력된 자료 받기
+			String memberId = request.getParameter("memberId");
+			String passwd = request.getParameter("passwd1");
+			String name = request.getParameter("name");
+			String gender = request.getParameter("gender");
+			
+			//Meber 객체 생성
+			Member member = new Member();
+			member.setMemberId(memberId);
+			member.setPasswd(passwd);
+			member.setName(name);
+			member.setGender(gender);
+			
+			//memberDAO의 updateMember()를 호출
+			memberDAO.updateMember(member);
 		}
 		
 		//게시판 관리
 		if(command.equals("/boardList.do")) {
+			// 검색 처리
+			String _field = request.getParameter("field");
+			String _kw = request.getParameter("kw");
+			
+			String field = "title";  // 쿼리 값이 전달되지 않을 경우 기본값 사용
+			if(_field != null) {	 // 쿼리 값이 있는 경우
+				field = _field;
+			}
+			
+			String kw = "";   // 쿼리 값이 전달되지 않을 경우 기본값 사용
+			if(_kw != null) { // 쿼리 값이 있는 경우
+				kw = _kw;
+			}
+			
+			// 검색 처리 메서드
+			// ArrayList<Board> boardList = boardDAO.getBoardList(field, kw);
+			
 			//페이지 처리
 			String pageNum = request.getParameter("pageNum");
 			if(pageNum == null) { //pageNum이 없으면 기본 1페이지
@@ -181,25 +214,27 @@ public class MainController extends HttpServlet {
 			
 			//종료(끝) 페이지
 			int total = boardDAO.getBoardCount(); //총행수가 나누어 떨어지면 않으면 페이지수에 1을 더함
-			//int endPage = toatal / pageSize -> 3page
+			//int endPage = total / pageSize -> 3page
 			int endPage = total / pageSize;  //총행수 / 페이지당 행의 수
 			endPage = (total % 10 == 0) ? endPage : endPage + 1;
 			
 			//게시글 목록보기 함수 호출
-			ArrayList<Board> boardList = boardDAO.getBoardList(startRow, pageSize);
+			ArrayList<Board> boardList = boardDAO.getBoardList(field, kw, startRow, pageSize);
 			
 			//모델 생성
 			request.setAttribute("boardList", boardList);
 			request.setAttribute("currentPage", currentPage);
 			request.setAttribute("startPage", startPage);
 			request.setAttribute("endPage", endPage);
+			request.setAttribute("field", field);
+			request.setAttribute("kw", kw);
 			
 			nextPage = "/board/boardList.jsp";
 		}else if(command.equals("/boardForm.do")) {
 			nextPage = "/board/boardForm.jsp";
 		}else if(command.equals("/addBoard.do")) {
 			
-			String realFolder = "C:/Users/Administrator/git/jspworks0/Members/src/main/webapp/upload";
+			String realFolder = "C:/green_project/jspworks/Members2/src/main/webapp/upload";
 			
 			MultipartRequest multi = new MultipartRequest(request, realFolder,
 					5*1024*1024, "utf-8", new DefaultFileRenamePolicy());
@@ -300,7 +335,10 @@ public class MainController extends HttpServlet {
 		}
 		
 		//포워딩 - 새로고침 자동 저장 오류 해결 : response.sendRedirect()
-		if(command.equals("/addBoard.do")) {
+		if(command.equals("/updateMember.do")) { //수정후 회원정보 페이지 이동
+			String memberId = request.getParameter("memberId");
+			response.sendRedirect("/memberView.do?memberId=" + memberId);
+		}else if(command.equals("/addBoard.do")) { //게시글 등록후 게시글 목록으로 이동
 			response.sendRedirect("/boardList.do");
 		}else if(command.equals("/addReply.do")) {
 			int bnum = Integer.parseInt(request.getParameter("bnum"));
