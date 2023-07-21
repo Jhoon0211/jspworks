@@ -14,7 +14,7 @@ public class ProductDAO {
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
 	
-	// 상품 목록 보기
+	//상품 목록 보기
 	public List<Product> getProductList(){
 		List<Product> productList = new ArrayList<>();
 		conn = JDBCUtil.getConnection();
@@ -30,13 +30,13 @@ public class ProductDAO {
 				product.setDescription(rs.getString("p_description"));
 				product.setCategory(rs.getString("p_category"));
 				product.setManufacturer(rs.getString("p_manufacturer"));
-				product.setUnitsInStock(rs.getLong("p_unitsinstock"));
+				product.setUnitsInStock(rs.getLong("p_unitsInStock"));
 				product.setCondition(rs.getString("p_condition"));
 				product.setProductImage(rs.getString("p_productImage"));
 				
-				productList.add(product); // 리스트에 상품 저장
+				productList.add(product); //리스트에 상품 저장
 			}
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			JDBCUtil.close(conn, pstmt, rs);
@@ -44,7 +44,7 @@ public class ProductDAO {
 		return productList;
 	}
 	
-	// 상품 상세 보기
+	//상품 상세 보기
 	public Product getProduct(String productId) {
 		Product product = new Product();
 		conn = JDBCUtil.getConnection();
@@ -60,7 +60,7 @@ public class ProductDAO {
 				product.setDescription(rs.getString("p_description"));
 				product.setCategory(rs.getString("p_category"));
 				product.setManufacturer(rs.getString("p_manufacturer"));
-				product.setUnitsInStock(rs.getLong("p_unitsinstock"));
+				product.setUnitsInStock(rs.getLong("p_unitsInStock"));
 				product.setCondition(rs.getString("p_condition"));
 				product.setProductImage(rs.getString("p_productImage"));
 			}
@@ -72,11 +72,11 @@ public class ProductDAO {
 		return product;
 	}
 	
-	// 상품 등록
-	public void addProduct (Product product) {
+	//상품 등록 
+	public void addProduct(Product product) {
 		conn = JDBCUtil.getConnection();
 		String sql = "INSERT INTO product(p_id, p_name, p_unitPrice, p_description, "
-				+ "p_category, p_manufacturer, p_unitsInStock, P_condition, p_productImage) "
+				+ "p_category, p_manufacturer, p_unitsInStock, p_condition, p_productImage) "
 				+ "VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		try {
 			pstmt = conn.prepareStatement(sql);
@@ -97,13 +97,62 @@ public class ProductDAO {
 		}
 	}
 	
-	// 상품 삭제
-	public void deleteProduct (String ProductId) {
+	//상품 삭제
+	public void deleteProduct(String productId) {
 		conn = JDBCUtil.getConnection();
 		String sql = "DELETE FROM product WHERE p_id = ?";
 		try {
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, ProductId);
+			pstmt.setString(1, productId);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(conn, pstmt);
+		}
+	}
+	
+	//상품 수정
+	public void updateProduct(Product product) {
+		conn = JDBCUtil.getConnection();
+		String sql = "UPDATE product SET p_name=?, p_unitPrice=?, p_description=?, "
+				+ "p_category=?, p_manufacturer=?, p_unitsInStock=?, p_condition=?, "
+				+ "p_productImage=? WHERE p_id=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, product.getPname());
+			pstmt.setInt(2, product.getUnitPrice());
+			pstmt.setString(3, product.getDescription());
+			pstmt.setString(4, product.getCategory());
+			pstmt.setString(5, product.getManufacturer());
+			pstmt.setLong(6, product.getUnitsInStock());
+			pstmt.setString(7, product.getCondition());
+			pstmt.setString(8, product.getProductImage());
+			pstmt.setString(9, product.getProductId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCUtil.close(conn, pstmt);
+		}
+	}
+	
+	//상품 수정
+	public void updateProductNoImage(Product product) {
+		conn = JDBCUtil.getConnection();
+		String sql = "UPDATE product SET p_name=?, p_unitPrice=?, p_description=?, "
+				+ "p_category=?, p_manufacturer=?, p_unitsInStock=?, p_condition=? "
+				+ "WHERE p_id=?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, product.getPname());
+			pstmt.setInt(2, product.getUnitPrice());
+			pstmt.setString(3, product.getDescription());
+			pstmt.setString(4, product.getCategory());
+			pstmt.setString(5, product.getManufacturer());
+			pstmt.setLong(6, product.getUnitsInStock());
+			pstmt.setString(7, product.getCondition());
+			pstmt.setString(8, product.getProductId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
