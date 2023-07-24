@@ -162,7 +162,7 @@
 
  	  
       
-      <Context docBase="Market" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Market"/></Host>
+      <Context docBase="Members2" path="/" reloadable="true" source="org.eclipse.jst.jee.server:Members2"/></Host>
     </Engine>
   </Service>
 </Server>
